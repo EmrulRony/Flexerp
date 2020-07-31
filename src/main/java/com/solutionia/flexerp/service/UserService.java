@@ -32,7 +32,7 @@ public class UserService {
 	
 	@Transactional
 	public User userExist(User user) {
-		return userDao.userExist(user.getLogin(), user.getPassword());
+		return userDao.userExist(user.getEmail(), user.getPassword());
 	}
 	
 	@Transactional

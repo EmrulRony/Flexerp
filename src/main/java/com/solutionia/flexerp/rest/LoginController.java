@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +16,7 @@ import com.solutionia.flexerp.entity.User;
 import com.solutionia.flexerp.service.UserService;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api")
 public class LoginController {
 	private User user;
@@ -45,6 +47,11 @@ public class LoginController {
     @GetMapping("/login/users")
     public List<User> findAllUser (){
     	return userService.listUser();
+    }
+    
+    @GetMapping("/login/getUserJson")
+    public User findUserJson() {
+    	return new User();
     }
     
 }

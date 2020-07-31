@@ -34,6 +34,8 @@ public class User extends BaseEntity {
     @Basic(optional = false)
     @Column(name = "login")
     private String login;
+    @Column(name = "email")
+    private String email;
     @Basic(optional = false)
     @Column(name = "password")
     private String password;
@@ -70,7 +72,17 @@ public class User extends BaseEntity {
         this.login = login;
     }
 
-    public String getPassword() {
+    public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+	public String getPassword() {
         return password;
     }
 

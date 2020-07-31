@@ -32,11 +32,11 @@ public class UserDao {
 		return query.getResultList();
 	}
 	
-	public User userExist(String username, String password) {
+	public User userExist(String email, String password) {
 
-        TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.login = :login AND u.password = :password AND u.active = 1", User.class);
+        TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.email = :email AND u.password = :password AND u.active = 1", User.class);
 
-        query.setParameter("login", username);
+        query.setParameter("email", email);
         query.setParameter("password", password);
         try {
             User user = query.getSingleResult();
