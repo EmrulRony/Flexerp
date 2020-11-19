@@ -1,6 +1,8 @@
 package com.solutionia.flexerp.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -26,7 +28,9 @@ import javax.persistence.Table;
     @NamedQuery(name = "Tax.findById", query = "SELECT t FROM Tax t WHERE t.id = :id"),
     @NamedQuery(name = "Tax.findByName", query = "SELECT t FROM Tax t WHERE t.name = :name"),
     @NamedQuery(name = "Tax.findByAmount", query = "SELECT t FROM Tax t WHERE t.amount = :amount"),
-    @NamedQuery(name = "Tax.findByActive", query = "SELECT t FROM Tax t WHERE t.active = :active")})
+    @NamedQuery(name = "Tax.findByActive", query = "SELECT t FROM Tax t WHERE t.active = :active"),
+    @NamedQuery(name = "Tax.findTaxByName&Type", query = "SELECT t FROM Tax t WHERE t.name = :name AND t.typeTaxUse = :typeTaxUse")
+})
 
 public class Tax extends BaseEntity {
     
@@ -54,6 +58,7 @@ public class Tax extends BaseEntity {
     @OneToMany(mappedBy = "tax")
     private List<InvoiceTax> invoiceTaxes;
     @OneToMany(mappedBy = "tax")
+    @JsonIgnore
     private List<SaleOrderLine> saleOrderLines;
     @OneToMany(mappedBy = "tax")
     private List<JournalItem> journalItems;

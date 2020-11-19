@@ -1,6 +1,10 @@
 package com.solutionia.flexerp.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -46,7 +50,9 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Partner.findByIsCompany", query = "SELECT p FROM Partner p WHERE p.isCompany = :isCompany"),
     @NamedQuery(name = "Partner.findByPurchaseDeals", query = "SELECT p FROM Partner p WHERE p.purchaseDeals = :purchaseDeals"),
     @NamedQuery(name = "Partner.findBySaleDeals", query = "SELECT p FROM Partner p WHERE p.saleDeals = :saleDeals"),
-    @NamedQuery(name = "Partner.findByActive", query = "SELECT p FROM Partner p WHERE p.active = :active")})
+    @NamedQuery(name = "Partner.findByActive", query = "SELECT p FROM Partner p WHERE p.active = :active"),
+    @NamedQuery(name = "Partner.findCustomerByName", query =  "SELECT p FROM Partner p WHERE p.name = :name AND p.customer = :isCustomer")
+})
 
 public class Partner extends BaseEntity {
     
@@ -98,28 +104,39 @@ public class Partner extends BaseEntity {
     @Column(name = "active")
     private Boolean active;
     @JoinColumn(name = "accountReceivable_id", referencedColumnName = "id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Account accountReceivable;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JoinColumn(name = "accountPayable_id", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Account accountPayable;   
     @OneToMany(mappedBy = "partner")
+    @JsonIgnore
     private List<JournalItem> journalItems;
     @OneToMany(mappedBy = "partner")
+    @JsonIgnore
     private List<DeliveryOrderLine> deliveryOrderLines;
     @OneToMany(mappedBy = "partner")
+    @JsonIgnore
     private List<DeliveryOrder> deliveryOrders;
     @OneToMany(mappedBy = "partner")
+    @JsonIgnore
     private List<JournalEntry> journalEntries;
     @OneToMany(mappedBy = "partner")
+    @JsonIgnore
     private List<InvoiceLine> invoiceLines;
     @OneToMany(mappedBy = "partner")
+    @JsonIgnore
     private List<PurchaseOrder> purchaseOrderList;
     @OneToMany(mappedBy = "partner")
+    @JsonIgnore
     private List<SaleOrder> saleOrders;
     @OneToMany(mappedBy = "partner")
+    @JsonIgnore
     private List<Payment> payments;
     @OneToMany(mappedBy = "partner")
+    @JsonIgnore
     private List<Invoice> invoices;
    
     

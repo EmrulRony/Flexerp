@@ -1,5 +1,7 @@
 package com.solutionia.flexerp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -70,6 +72,7 @@ public class SaleOrderLine extends BaseEntity {
     private String taxName;
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
+    @JsonIgnore
     private SaleOrder saleOrder;
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -77,12 +80,9 @@ public class SaleOrderLine extends BaseEntity {
     @JoinColumn(name = "tax_id", referencedColumnName = "id")
     @ManyToOne
     private Tax tax;
-
-
+    
     public SaleOrderLine() {
     }
-
-
     public SaleOrderLine(Double quantity, double price, double subTotal, Boolean active) {
         this.quantity = quantity;
         this.price = price;

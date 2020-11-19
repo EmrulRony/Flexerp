@@ -2,6 +2,9 @@
 package com.solutionia.flexerp.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -53,6 +56,7 @@ public class Inventory extends BaseEntity{
     private Boolean active;
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     @OneToOne(cascade=CascadeType.ALL, optional = false)
+    @JsonBackReference
     private Product product;
 
     public Inventory() {

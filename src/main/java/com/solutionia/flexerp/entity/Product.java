@@ -1,5 +1,7 @@
 package com.solutionia.flexerp.entity;
 
+import com.fasterxml.jackson.annotation.*;
+
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -16,31 +18,31 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
- * 
  * @author MOHAMMED BOUNAGA
- * 
+ * <p>
  * github.com/medbounaga
  */
 
 @Entity
 @Table(name = "product")
 @NamedQueries({
-    @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p"),
-    @NamedQuery(name = "Product.findById", query = "SELECT p FROM Product p WHERE p.id = :id"),
-    @NamedQuery(name = "Product.findByDefaultCode", query = "SELECT p FROM Product p WHERE p.defaultCode = :defaultCode"),
-    @NamedQuery(name = "Product.findByName", query = "SELECT p FROM Product p WHERE p.name = :name"),
-    @NamedQuery(name = "Product.findBySalePrice", query = "SELECT p FROM Product p WHERE p.salePrice = :salePrice"),
-    @NamedQuery(name = "Product.findByPurchasePrice", query = "SELECT p FROM Product p WHERE p.purchasePrice = :purchasePrice"),
-    @NamedQuery(name = "Product.findByWeight", query = "SELECT p FROM Product p WHERE p.weight = :weight"),
-    @NamedQuery(name = "Product.findByVolume", query = "SELECT p FROM Product p WHERE p.volume = :volume"),
-    @NamedQuery(name = "Product.findBySaleOk", query = "SELECT p FROM Product p WHERE p.saleOk = true"),
-    @NamedQuery(name = "Product.findByPurchaseOk", query = "SELECT p FROM Product p WHERE p.purchaseOk = true"),
-    @NamedQuery(name = "Product.findByActive", query = "SELECT p FROM Product p WHERE p.active = :active")})
+        @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p"),
+        @NamedQuery(name = "Product.findById", query = "SELECT p FROM Product p WHERE p.id = :id"),
+        @NamedQuery(name = "Product.findByDefaultCode", query = "SELECT p FROM Product p WHERE p.defaultCode = :defaultCode"),
+        @NamedQuery(name = "Product.findByName", query = "SELECT p FROM Product p WHERE p.name = :name"),
+        @NamedQuery(name = "Product.findBySalePrice", query = "SELECT p FROM Product p WHERE p.salePrice = :salePrice"),
+        @NamedQuery(name = "Product.findByPurchasePrice", query = "SELECT p FROM Product p WHERE p.purchasePrice = :purchasePrice"),
+        @NamedQuery(name = "Product.findByWeight", query = "SELECT p FROM Product p WHERE p.weight = :weight"),
+        @NamedQuery(name = "Product.findByVolume", query = "SELECT p FROM Product p WHERE p.volume = :volume"),
+        @NamedQuery(name = "Product.findBySaleOk", query = "SELECT p FROM Product p WHERE p.saleOk = true"),
+        @NamedQuery(name = "Product.findByPurchaseOk", query = "SELECT p FROM Product p WHERE p.purchaseOk = true"),
+        @NamedQuery(name = "Product.findByActive", query = "SELECT p FROM Product p WHERE p.active = :active"),
+        @NamedQuery(name = "Product.findActiveByName", query = "SELECT p FROM Product  p WHERE p.name = :name AND p.active = :isActive")})
 
 public class Product extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Basic(fetch = FetchType.LAZY)
     @Lob
     @Column(name = "image")
@@ -48,16 +50,16 @@ public class Product extends BaseEntity {
     @Column(name = "default_code")
     private String defaultCode;
     @Basic(optional = false)
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     private String name;
     @Basic(fetch = FetchType.LAZY)
     @Lob
     @Column(name = "image_medium")
     private byte[] imageMedium;
     @Column(name = "sale_price")
-    private Double salePrice = 2d;
+    private Double salePrice;
     @Column(name = "purchase_price")
-    private Double purchasePrice = 1d;
+    private Double purchasePrice;
     @Column(name = "description")
     private String description;
     @Column(name = "weight")
@@ -80,18 +82,23 @@ public class Product extends BaseEntity {
     @ManyToOne(optional = false)
     private ProductUom uom;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "product")
+    @JsonManagedReference
     private Inventory inventory;
+    @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<JournalItem> journalItems;
+    @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<DeliveryOrderLine> deliveryOrderLines;
+    @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<InvoiceLine> invoiceLines;
+    @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<PurchaseOrderLine> purchaseOrderLines;
+    @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<SaleOrderLine> saleOrderLines;
-    
 
     public Product() {
     }

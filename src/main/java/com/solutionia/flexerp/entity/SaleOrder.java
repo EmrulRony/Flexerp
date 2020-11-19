@@ -1,5 +1,7 @@
 package com.solutionia.flexerp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -20,7 +22,7 @@ import javax.persistence.TemporalType;
 
 /**
  * 
- * @author MOHAMMED BOUNAGA
+ * @author Emrul Rony
  * 
  * github.com/medbounaga
  */
@@ -86,8 +88,10 @@ public class SaleOrder extends BaseEntity {
     @ManyToOne(optional = false)
     private Partner partner;
     @OneToMany(mappedBy = "saleOrder", cascade = CascadeType.REMOVE)
+    @JsonIgnore
     private List<DeliveryOrder> deliveryOrders;
     @OneToMany(mappedBy = "saleOrder", cascade = CascadeType.REMOVE)
+    @JsonIgnore
     private List<Invoice> invoices;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "saleOrder", orphanRemoval=true , fetch = FetchType.EAGER)
     private List<SaleOrderLine> saleOrderLines;

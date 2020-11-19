@@ -19,7 +19,6 @@ public abstract class BaseEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
-    @JsonIgnore
     private Integer id;
 
     public Integer getId() {
@@ -30,31 +29,31 @@ public abstract class BaseEntity implements Serializable {
         this.id = id;
     }
 
-    @Override
-    public String toString() {
-        return super.toString() + id;
-    }
+//    @Override
+//    public String toString() {
+//        return super.toString() + id;
+//    }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        BaseEntity other = (BaseEntity) obj;
-        return id == other.id;
-    }
+//    @Override
+//    public int hashCode() {
+//        int hash = 0;
+//        hash += (id != null ? id.hashCode() : 0);
+//        return hash;
+//    }
+//
+//    @Override
+//    public boolean equals(Object obj) {
+//        if (this == obj) {
+//            return true;
+//        }
+//        if (obj == null) {
+//            return false;
+//        }
+//        if (getClass() != obj.getClass()) {
+//            return false;
+//        }
+//        BaseEntity other = (BaseEntity) obj;
+//        return id == other.id;
+//    }
 
 }
