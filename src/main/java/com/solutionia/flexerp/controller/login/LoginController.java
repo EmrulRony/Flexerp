@@ -1,4 +1,4 @@
-package com.solutionia.flexerp.rest;
+package com.solutionia.flexerp.rest.login;
 
 import java.util.List;
 
