@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.solutionia.flexerp.entity.User;
 
 @Repository
-public class UserDao {
+public class UserDAO {
 	
 	@Autowired
 	private EntityManager em;
@@ -25,16 +25,14 @@ public class UserDao {
 		return user;
 	}
 	
-	
 	public List<User> findAllUser(){
 		Session session = em.unwrap(Session.class);
-		Query<User> query = session.createQuery("from User", User.class);
+		Query<User> query = session.createQuery("SELECT u from User u", User.class);
 		return query.getResultList();
 	}
 	
 	public User userExist(String email, String password) {
-
-        TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.email = :email AND u.password = :password AND u.active = 1", User.class);
+        TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.email = :email AND u.password = :password AND u.active = true", User.class);
 
         query.setParameter("email", email);
         query.setParameter("password", password);
@@ -43,8 +41,21 @@ public class UserDao {
             System.out.println("User exists");
             return user;
         } catch (NoResultException e) {
-            System.out.println("User doesn't exist");
-            return null;
+            System.out.println("Did not found the user!!");
         }
+		return null;
     }
+
+    // "SELECT u FROM User u WHERE u.login = :login"
+    public User findUserByUserName(String userName){
+		Session session = em.unwrap(Session.class);
+		try{
+			Query<User> query = session.createNamedQuery("User.findByLogin", User.class);
+			query.setParameter("login",userName);
+			return query.getSingleResult();
+		} catch (NoResultException ex){
+
+		}
+		return null;
+	}
 }

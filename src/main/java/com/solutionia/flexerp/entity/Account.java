@@ -1,6 +1,10 @@
 
 package com.solutionia.flexerp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -22,7 +26,7 @@ import javax.persistence.Table;
     @NamedQuery(name = "Account.findByType", query = "SELECT a FROM Account a WHERE a.type = :type"),         
     @NamedQuery(name = "Account.findAll", query = "SELECT a FROM Account a"),
     @NamedQuery(name = "Account.findById", query = "SELECT a FROM Account a WHERE a.id = :id"),
-    @NamedQuery(name = "Account.findByName", query = "SELECT a FROM Account a WHERE a.title = :name"),
+    @NamedQuery(name = "Account.findByName", query = "SELECT a FROM Account a WHERE a.name = :name"),
     @NamedQuery(name = "Account.findByActive", query = "SELECT a FROM Account a WHERE a.active = :active")})
 
 public class Account extends BaseEntity {
@@ -57,9 +61,11 @@ public class Account extends BaseEntity {
     private List<Invoice> invoices;
     
     @OneToMany(mappedBy= "accountReceivable")
+
+    @JsonIgnore
     private List<Partner> partners;
-    
     @OneToMany(mappedBy= "accountPayable")
+    @JsonIgnore
     private List<Partner> morePartners;
 
     public Account() {

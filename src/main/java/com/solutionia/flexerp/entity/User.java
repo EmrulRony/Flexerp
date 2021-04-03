@@ -8,6 +8,8 @@ import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 /**
  * 
@@ -33,11 +35,17 @@ public class User extends BaseEntity {
     
     @Basic(optional = false)
     @Column(name = "login")
+    @NotEmpty(message = "Login is a mandatory field, please provide login")
+    @Size(min = 1, max = 64, message = "Length of login should not less than one")
     private String login;
     @Column(name = "email")
+    @NotEmpty(message = "Email is a mandatory field, please provide email")
+    @Size(min = 1, max = 64, message = "length of email should not less than one")
     private String email;
     @Basic(optional = false)
     @Column(name = "password")
+    @NotEmpty
+    @Size(min = 4, message = "Password field character can't be less than 4")
     private String password;
     @Basic(optional = false)
     @Column(name = "name")
@@ -50,7 +58,6 @@ public class User extends BaseEntity {
     @Lob
     @Column(name = "image")
     private byte[] image;
-
 
     public User() {
     }
